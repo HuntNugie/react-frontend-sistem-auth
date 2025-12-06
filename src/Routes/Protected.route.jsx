@@ -14,5 +14,5 @@ export const ProtectedRoute = ({children})=>{
         return navigateTo("/login")
     }
 
-    return {children}
+    return children
 }

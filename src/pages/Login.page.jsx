@@ -1,15 +1,27 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../Context/Auth.context";
+import Loading from "../components/Loading";
+
 export default function Login() {
+    const {loading,login} = useContext(AuthContext);
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const handleSubmit = async(e)=>{
+        e.preventDefault();
+        await login(email,password)
+    }
     return (
         <>
-            <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark">
+        {loading ? (<Loading/>) :     <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark">
                 <div className="card bg-dark text-white border-secondary shadow-lg" style={{width: "25rem"}}>
                     <div className="card-body">
                         <h3 className="text-center mb-4">Masuk</h3>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
                                 <input
                                     type="email"
+                                    onChange={(e)=>setEmail(e.target.value)}
                                     className="form-control bg-secondary text-white border-0"
                                     placeholder="email@example.com"
                                 />
@@ -18,6 +30,7 @@ export default function Login() {
                                 <label className="form-label">Password</label>
                                 <input
                                     type="password"
+                                    onChange={(e)=>setPassword(e.target.value)}
                                     className="form-control bg-secondary text-white border-0"
                                     placeholder="Password"
                                 />
@@ -32,7 +45,7 @@ export default function Login() {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     );
 }
